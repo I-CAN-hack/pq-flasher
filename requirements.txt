@@ -1,0 +1,2 @@
+git+https://github.com/commaai/panda.git@9ac35a4a7bf82a42d892381d8520de0458561873
+crcmod==1.7
