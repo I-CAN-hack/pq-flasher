@@ -5,7 +5,7 @@ See the related [blog series](https://blog.willemmelching.nl/carhacking/2022/01/
 
 ## Read this first
  - THIS IS AT YOUR OWN RISK
- - Making changes to your EPS might have unintended consequences. You can loose power steering, or the steering motor may put large amounts of torque on the wheel unexpectedly. Ensure the patches to the calibration values are safe before using.
+ - Making changes to your EPS might have unintended consequences. You can lose power steering, or the steering motor may put large amounts of torque on the wheel unexpectedly. Ensure the patches to the calibration values are safe before using.
  - This may brick your EPS. Only attempt this if you're willing to replace the EPS if needed.
  - This was only tested on a 2010 VW Golf with the 2501 FW. Your milage may vary on other firmware versions or cars.
  - A [comma.ai panda](https://comma.ai/shop/products/panda-obd-ii-dongle) is needed to communicate over CAN, and the latest panda python library needs to be installed (`pip install -r requiremets.txt`).
