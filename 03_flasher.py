@@ -2,6 +2,7 @@
 import time
 import tqdm
 import sys
+import struct
 from argparse import ArgumentParser
 
 from panda import Panda  # type: ignore
@@ -9,6 +10,20 @@ from tp20 import TP20Transport, MessageTimeoutError
 from kwp2000 import ACCESS_TYPE, ROUTINE_CONTROL_TYPE, KWP2000Client, SESSION_TYPE, ECU_IDENTIFICATION_TYPE
 
 CHUNK_SIZE = 240
+
+
+def compute_key(seed):
+    key = seed
+    for _ in range(3):
+        tmp = (key ^ 0x3f_1735) & 0xffff_ffff
+        key = (tmp + 0xa3ff_7890) & 0xffff_ffff
+
+        if key < 0xa3ff_7890:
+            key = (key >> 1) | (tmp << 0x1f)
+
+        key = key & 0xffff_ffff
+    return key
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -59,8 +74,11 @@ if __name__ == "__main__":
 
     print("\nRequest seed")
     seed = kwp_client.security_access(ACCESS_TYPE.PROGRAMMING_REQUEST_SEED)
-    key = b"\x00\x00\x00\x00"  # Anything is accepted...
     print(f"seed: {seed.hex()}")
+
+    seed_int = struct.unpack(">I", seed)[0]
+    key_int = compute_key(seed_int)
+    key = struct.pack(">I", key_int)
     print(f"key: {key.hex()}")
 
     print("\n Send key")
