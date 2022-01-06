@@ -11,11 +11,12 @@ from kwp2000 import ACCESS_TYPE, ROUTINE_CONTROL_TYPE, KWP2000Client, SESSION_TY
 
 CHUNK_SIZE = 240
 
+
 def compute_key(seed):
     key = seed
     for _ in range(3):
-        tmp = key ^ 0x3f_1735
-        key = tmp + 0xa3ff_7890
+        tmp = (key ^ 0x3f_1735) & 0xffff_ffff
+        key = (tmp + 0xa3ff_7890) & 0xffff_ffff
 
         if key < 0xa3ff_7890:
             key = (key >> 1) | (tmp << 0x1f)
@@ -77,7 +78,7 @@ if __name__ == "__main__":
 
     seed_int = struct.unpack(">I", seed)[0]
     key_int = compute_key(seed_int)
-    key = struct.pack(">I", seed_int)
+    key = struct.pack(">I", key_int)
     print(f"key: {key.hex()}")
 
     print("\n Send key")
