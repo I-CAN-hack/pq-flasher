@@ -7,7 +7,7 @@ See the related [blog series](https://blog.willemmelching.nl/carhacking/2022/01/
  - THIS IS AT YOUR OWN RISK
  - Making changes to your EPS might have unintended consequences. You can lose power steering, or the steering motor may put large amounts of torque on the wheel unexpectedly. Ensure the patches to the calibration values are safe before using.
  - This may brick your EPS. Only attempt this if you're willing to replace the EPS if needed.
- - This was only tested on a 2010 VW Golf with the 2501 FW. Your milage may vary on other firmware versions or cars.
+ - This was only tested by the author on a 2010 VW Golf with the 2501 FW. Your milage may vary on other firmware versions or cars. There are reports of things working as expected on the 3501 FW.
  - A [comma.ai panda](https://comma.ai/shop/products/panda-obd-ii-dongle) is needed to communicate over CAN, and the latest panda python library needs to be installed (`pip install -r requiremets.txt`).
 
 ## Procedure
@@ -29,7 +29,7 @@ Connecting using CCP...
 ```
 
 ### Apply patches
-The patching script will change the minimum speed to 0 km/h and HCA timer and fix the necesarry checksums. It verifies it’s patching the right firmware version based on the version string, and checks the existing values before changing them. Only the patches for the 2501 firmware were tested. The patches for the 3501 firmware are present, but untested and commented out. These patches should be tested on a spare ECU first if you don't want to risk bricking the EPS in your car.
+The patching script will change the minimum speed to 0 km/h and HCA timer and fix the necesarry checksums. It verifies it’s patching the right firmware version based on the version string, and checks the existing values before changing them. These patches should be tested on a spare ECU first if you don't want to risk bricking the EPS in your car.
 
 ```bash
 ./02_patcher.py --input firmware/orig.bin --output firmware/patched.bin --version 2501
@@ -67,7 +67,7 @@ Transfer data
 <...>
 ```
 
-The 3501 firmware has two calibration areas, but only the one from `0x5D000` to `0x5DFFF` needs to be reflashed. Note this is untested since my bootloader does not allow flashing this range separately, but I assume the 3501 firmware does.
+The 3501 firmware has two calibration areas, but only the one from `0x5D000` to `0x5DFFF` needs to be reflashed.
 
 ```bash
 ./03_flasher.py --input firmware/patched.bin --start-address 380928 --end-address 385023
