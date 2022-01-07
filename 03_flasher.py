@@ -15,13 +15,13 @@ CHUNK_SIZE = 240
 def compute_key(seed):
     key = seed
     for _ in range(3):
-        tmp = (key ^ 0x3f_1735) & 0xffff_ffff
-        key = (tmp + 0xa3ff_7890) & 0xffff_ffff
+        tmp = (key ^ 0x3F_1735) & 0xFFFF_FFFF
+        key = (tmp + 0xA3FF_7890) & 0xFFFF_FFFF
 
-        if key < 0xa3ff_7890:
-            key = (key >> 1) | (tmp << 0x1f)
+        if key < 0xA3FF_7890:
+            key = (key >> 1) | (tmp << 0x1F)
 
-        key = key & 0xffff_ffff
+        key = key & 0xFFFF_FFFF
     return key
 
 
@@ -60,9 +60,15 @@ if __name__ == "__main__":
     kwp_client.diagnostic_session_control(SESSION_TYPE.PROGRAMMING)
     print("Done. Waiting to reconnect...")
 
-    time.sleep(1)
-    print("\nReconnecting...")
-    tp20 = TP20Transport(p, 0x9)
+    for i in range(10):
+        time.sleep(1)
+        print(f"\nReconnecting... {i}")
+        try:
+            tp20 = TP20Transport(p, 0x9)
+            break
+        except MessageTimeoutError:
+            pass
+
     kwp_client = KWP2000Client(tp20)
 
     print("\nReading ecu identification & flash status")
