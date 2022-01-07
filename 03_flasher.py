@@ -6,7 +6,7 @@ import struct
 from argparse import ArgumentParser
 
 from panda import Panda  # type: ignore
-from tp20 import TP20Transport, MessageTimeoutError
+from tp20 import TP20Transport
 from kwp2000 import ACCESS_TYPE, ROUTINE_CONTROL_TYPE, KWP2000Client, SESSION_TYPE, ECU_IDENTIFICATION_TYPE
 
 CHUNK_SIZE = 240
@@ -106,11 +106,13 @@ if __name__ == "__main__":
     for i in range(10):
         time.sleep(1)
         print(f"\nReconnecting... {i}")
+
+        p.can_clear(0xFFFF)
         try:
             tp20 = TP20Transport(p, 0x9)
             break
-        except MessageTimeoutError:
-            pass
+        except Exception as e:
+            print(e)
 
     kwp_client = KWP2000Client(tp20)
 
