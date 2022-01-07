@@ -68,8 +68,8 @@ if __name__ == "__main__":
         try:
             tp20 = TP20Transport(p, 0x9)
             break
-        except MessageTimeoutError:
-            pass
+        except Exception as e:
+            print(e)
 
     kwp_client = KWP2000Client(tp20)
 
