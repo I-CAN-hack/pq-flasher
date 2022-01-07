@@ -63,6 +63,8 @@ if __name__ == "__main__":
     for i in range(10):
         time.sleep(1)
         print(f"\nReconnecting... {i}")
+
+        p.can_clear(0xFFFF)
         try:
             tp20 = TP20Transport(p, 0x9)
             break
