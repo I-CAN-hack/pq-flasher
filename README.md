@@ -38,6 +38,7 @@ The patching script will change the minimum speed to 0 km/h and HCA timer and fi
 ### Flashing
 You can choose to flash back the whole firmware, but this is not recommended since this takes about 10 minutes, and can risk bricking the ECU if you apply the wrong patches. By default the flasher script will only overwrite the calibration area that contains the values we actually changed.
 
+#### 2501 FW
 ```bash
 ./03_flasher.py --input firmware/patched.bin
 
@@ -67,12 +68,14 @@ Transfer data
 <...>
 ```
 
+#### 3501 FW
 The 3501 firmware has two calibration areas, but only the one from `0x5D000` to `0x5DFFF` needs to be reflashed.
 
 ```bash
 ./03_flasher.py --input firmware/patched.bin --start-address 380928 --end-address 385023
 ```
 
+#### Flash whole file
 To flash the whole firmware use:
 
 ```bash
