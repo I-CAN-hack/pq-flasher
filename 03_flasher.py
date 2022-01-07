@@ -27,6 +27,7 @@ def compute_key(seed):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
+    parser.add_argument("--bus", default=0, type=int, help="CAN bus number to use")
     parser.add_argument("--input", required=True, help="input to flash")
     parser.add_argument("--start-address", default=0x5E000, type=int, help="start address")
     parser.add_argument("--end-address", default=0x5EFFF, type=int, help="end address (inclusive)")
@@ -53,7 +54,7 @@ if __name__ == "__main__":
     p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
 
     print("Connecting...")
-    tp20 = TP20Transport(p, 0x9)
+    tp20 = TP20Transport(p, 0x9, bus=args.bus)
     kwp_client = KWP2000Client(tp20)
 
     print("\nEntering programming mode")
@@ -66,7 +67,7 @@ if __name__ == "__main__":
 
         p.can_clear(0xFFFF)
         try:
-            tp20 = TP20Transport(p, 0x9)
+            tp20 = TP20Transport(p, 0x9, bus=args.bus)
             break
         except Exception as e:
             print(e)
@@ -109,7 +110,7 @@ if __name__ == "__main__":
 
         p.can_clear(0xFFFF)
         try:
-            tp20 = TP20Transport(p, 0x9)
+            tp20 = TP20Transport(p, 0x9, bus=args.bus)
             break
         except Exception as e:
             print(e)

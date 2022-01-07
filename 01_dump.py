@@ -15,8 +15,9 @@ CHUNK_SIZE = 4
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--start-address", default=0, help="start address")
-    parser.add_argument("--end-address", default=0x5FFFF, help="end address (inclusive)")
+    parser.add_argument("--bus", default=0, type=int, help="CAN bus number to use")
+    parser.add_argument("--start-address", default=0, type=int, help="start address")
+    parser.add_argument("--end-address", default=0x5FFFF, type=int, help="end address (inclusive)")
     parser.add_argument("--output", required=True, help="output file")
     args = parser.parse_args()
 
@@ -25,7 +26,7 @@ if __name__ == "__main__":
     p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
 
     print("Connecting using KWP2000...")
-    tp20 = TP20Transport(p, 0x9)
+    tp20 = TP20Transport(p, 0x9, bus=args.bus)
     kwp_client = KWP2000Client(tp20)
 
     print("Reading ecu identification & flash status")
@@ -36,7 +37,7 @@ if __name__ == "__main__":
     print("Flash status", status)
 
     print("\nConnecting using CCP...")
-    client = CcpClient(p, 1746, 1747, byte_order=BYTE_ORDER.LITTLE_ENDIAN)
+    client = CcpClient(p, 1746, 1747, byte_order=BYTE_ORDER.LITTLE_ENDIAN, bus=args.bus)
     client.connect(0x0)
 
     progress = tqdm.tqdm(total=args.end_address - args.start_address)

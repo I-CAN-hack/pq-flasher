@@ -17,7 +17,7 @@ Dump the existing firmware + calibration using CCP. Technically it’s possible 
 This step takes about 15 minutes. Store the ouput in a safe location if you ever want to restore the original firmware. The dump script will also output the current firmware version.
 
 ```bash
-./01_dump.py --output firmware/orig.bin
+./01_dump.py --bus 0 --output firmware/orig.bin
 
 Connecting using KWP2000...
 Reading ecu identification & flash status
@@ -40,7 +40,7 @@ You can choose to flash back the whole firmware, but this is not recommended sin
 
 #### 2501 FW
 ```bash
-./03_flasher.py --input firmware/patched.bin
+./03_flasher.py --bus 0 --input firmware/patched.bin
 
 [READY TO FLASH]
 WARNING! USE AT YOUR OWN RISK! THIS COULD BREAK YOUR ECU AND REQUIRE REPLACEMENT!
@@ -72,14 +72,14 @@ Transfer data
 The 3501 firmware has two calibration areas, but only the one from `0x5D000` to `0x5DFFF` needs to be reflashed.
 
 ```bash
-./03_flasher.py --input firmware/patched.bin --start-address 380928 --end-address 385023
+./03_flasher.py --bus 0 --input firmware/patched.bin --start-address 380928 --end-address 385023
 ```
 
 #### Flash whole file
 To flash the whole firmware use:
 
 ```bash
-./03_flasher.py --input firmware/patched.bin --start-address 40960 --end-address 393215
+./03_flasher.py --bus 0 --input firmware/patched.bin --start-address 40960 --end-address 393215
 ```
 
 ## License
