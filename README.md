@@ -11,7 +11,7 @@ See the related [blog series](https://blog.willemmelching.nl/carhacking/2022/01/
  - A [comma.ai panda](https://comma.ai/shop/products/panda-obd-ii-dongle) is needed to communicate over CAN, and the latest panda python library needs to be installed (`pip install -r requiremets.txt`).
 
 ## Procedure
-### Dump the existing fiwmare
+### Dump the existing firmware
 Dump the existing firmware + calibration using CCP. Technically it’s possible to use the update files to skip this step, but this ensures the exact same firmware is flashed back. This needs to be done using a direct connection to the EPS, and can’t be done through the OBD-II port since there is a gateway that blocks the CCP addresses. For example, this can be done using a [J533 harness](https://github.com/commaai/openpilot/wiki/VW-J533-%28Gateway%29-Cable).
 
 This step takes about 15 minutes. Store the ouput in a safe location if you ever want to restore the original firmware. The dump script will also output the current firmware version.
