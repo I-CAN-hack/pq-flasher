@@ -1,3 +1,3 @@
-git+https://github.com/commaai/panda.git@79f5e6fe860d4f84876f08ddeea00eb6361cb05d
+git+https://github.com/commaai/panda.git@95c4449d9624b7d34baa25f53a3ad967afa99df0
 crcmod==1.7
 tqdm==4.54.1
