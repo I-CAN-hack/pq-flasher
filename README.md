@@ -86,8 +86,3 @@ To flash the whole firmware use:
 Code in this repository is released under the MIT license.
 
 USING ANYTHING FROM THIS REPOSITY IS AT YOUR OWN RISK!
-
-
-If you like this kind of projects, consider donating so I can buy more random ECUs:
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X17MSBD)
